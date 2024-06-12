@@ -15,6 +15,7 @@ public class Ex05char {
     char c2 = 'a';  //97
     Utils.typeOf(new Animal());
     char c3 = '0';  //48
+    // char c4 = '';  에러남
 
     Ex05char ex05char = new Ex05char();
     System.out.println(ex05char.chr);
