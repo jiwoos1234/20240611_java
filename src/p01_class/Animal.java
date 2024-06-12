@@ -33,3 +33,9 @@ public void run() {
   System.out.println(legs);
   }
 }
+
+class Foo {
+  public static void main(String[] args) {
+
+  }
+}
