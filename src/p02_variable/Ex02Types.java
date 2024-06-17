@@ -4,7 +4,7 @@ import p01_class.Animal;
 
 public class Ex02Types {
   // 변수의 종류 크게 : Primitive, Reference
-  // Primitive type(일반형 변수, 실제 값을 가짐 )
+  // Primitive type(기본형 변수, 실제 값을 가짐 )
   // Reference type(참조형 변수, 주소 값을 가짐.)
 
   // 변수의 할당 = 선언 + 초기화

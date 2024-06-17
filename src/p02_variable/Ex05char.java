@@ -28,6 +28,7 @@ public class Ex05char {
     if (ex05char.chr == '\u0000') {
       System.out.println("공백이 같습니다.");
     }
+    //특수 문자 리터럴
     char c4 = '\'';
     char c5 = '\"';
     char c6 = '\\';
@@ -36,5 +37,7 @@ public class Ex05char {
     char c9 = '\n'; // 개행 (한줄 내려쓰기)
     char c10 = '\r'; // 캐리지 리턴
     char c11 = '\f'; // 폼피드
+    char c12 = '\u0000';  //공백의 헥사값
+    c12 = ' '; //기본값
   }
 }

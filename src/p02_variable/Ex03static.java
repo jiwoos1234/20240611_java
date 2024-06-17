@@ -23,6 +23,7 @@ public class Ex03static {
   }
 
   public static void main(String[] args) {
+    // static 공통의 값, instance 각각의값
     Ex03static e1 = new Ex03static();
     Ex03static e2 = new Ex03static();
     e1.vi = 10;
