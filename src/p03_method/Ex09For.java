@@ -35,14 +35,19 @@ public class Ex09For {
           System.out.printf("%d * %d = %2d \t" , i + k, j, (i +k) * j);
         }
         System.out.println();
-
-
       }
-      
     }
-    
-    
-    
+
+    // for 문은 비교적 횟수에 대한 예측이 가능할 때
+    int i = 0;
+    for ( ; ; ) {
+      System.out.println(i++);
+      if(i >= 10)
+        break; // 자신이 속한 반복문을 벗어남
+    }
+    for (int k = 10, j = 0; j < 10; j++, k--){
+
+    }
     
     
     
