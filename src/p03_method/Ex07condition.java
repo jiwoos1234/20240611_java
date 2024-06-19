@@ -11,7 +11,7 @@ public class Ex07condition {
 //    System.out.println(input);
     String result = "";
     String score = JOptionPane.showInputDialog("점수입력하세요");
-    int input = ();
+    int input = (Integer.parseInt(score));
 
     if (input >= 90) {
       result = "A";
