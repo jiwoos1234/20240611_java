@@ -26,29 +26,53 @@ public class Ex10while {
     }
 
 
+//    System.out.println("=======내 마음의 숫자를 맞추기 게임=======");
+//    boolean stop = false;
+//    while (true) {
+//      int random = (int) (Math.random() * 100) + 1;
+//      if (stop) break;
+//
+//      while (true) {
+//        String input = JOptionPane.showInputDialog("숫자를 입력하세요(종료하려면 Q,q)");
+//        if (input.toLowerCase().equals("q")) {
+//          stop = true;
+//          break;
+//        } else {
+//          int answer = Integer.parseInt(input);
+//          if (answer > random) {
+//            System.out.println("작습니다.");
+//          } else if (answer < random) {
+//            System.out.println("큽니다");
+//          } else {
+//            System.out.println("정답입니다.");
+//
+//          }
+//        }
+//      }
     System.out.println("=======내 마음의 숫자를 맞추기 게임=======");
-    boolean stop = false;
+    int random = (int) (Math.random() * 100) + 1;
     while (true) {
-      int random = (int) (Math.random() * 100) + 1;
-      if (stop) break;
-
-      while (true) {
-        String input = JOptionPane.showInputDialog("숫자를 입력하세요(종료하려면 Q,q)");
-        if (input.toLowerCase().equals("q")) {
-          stop = true;
-          break;
-        } else {
-          int answer = Integer.parseInt(input);
-          if (answer > random) {
-            System.out.println("작습니다.");
-          } else if (answer < random) {
-            System.out.println("큽니다");
-          } else {
-            System.out.println("정답입니다.");
-          }
-
-        }
+      int answer = Integer.parseInt(JOptionPane.showInputDialog("숫자를 입력하세요"));
+      if (answer > random) {
+        System.out.println("작습니다.");
+      } else if (answer < random) {
+        System.out.println("큽니다");
+      } else {
+        System.out.println("정답입니다.");
+        break;
       }
     }
+
+
+
+
+
+
+
+
+
+
+
+
   }
 }
