@@ -2,7 +2,7 @@ package p03_method;
 
 import javax.swing.*;
 
-public class Ex11Game {
+public class Ex10whileGame_mine {
   public static void main(String[] args) {
 
 
