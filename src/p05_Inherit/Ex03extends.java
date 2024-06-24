@@ -11,6 +11,14 @@ public class Ex03extends {
 
 // 추상클래스는 인스턴스 생성 불가. 상속받은 후 인스턴스 생성 가능
 abstract class Unit  {
+  public Unit() {
+    // this(), super() 는 공존 불가: 맨 첫줄에 있어야 하기 때문
+    super();
+//    this("", 15, "");
+    System.out.println("야생 동물 생성");
+  }
+
+
   public Unit(String tribe, int hp, String name) {
     super();
     this.tribe = tribe;
