@@ -17,6 +17,8 @@ public class Ex01List {
     list.add(new Member("jgd", "1", "정길동"));
     list.add(10);
     list.add(true);
+    list.remove(2);
+
 
     System.out.println(list);
 
