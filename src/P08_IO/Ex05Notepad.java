@@ -77,7 +77,7 @@ class Notepad extends JFrame {
         int ret = fc.showSaveDialog(miSave);
         if (ret == 0) {
           try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(fc.getSelectedFile()));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(fc.getSelectedFile().toString()));
             writer.write(textArea.getText());
             writer.close();
 
