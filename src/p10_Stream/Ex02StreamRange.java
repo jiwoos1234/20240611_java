@@ -41,5 +41,12 @@ public class Ex02StreamRange {
         System.out.println(integer);
       }
     });
+    IntStream lottoStream = new Random().ints(1,46);
+    lottoStream.distinct().limit(6).forEach(new IntConsumer() {
+      @Override
+      public void accept(int value) {
+        System.out.printf("%3d",value);
+      }
+    });
   }
 }
