@@ -77,6 +77,7 @@ class Notepad extends JFrame {
         int ret = fc.showSaveDialog(miSave);
         if (ret == 0) {
           try {
+
             BufferedWriter writer = new BufferedWriter(new FileWriter(fc.getSelectedFile().toString()));
             writer.write(textArea.getText());
             writer.close();
@@ -88,6 +89,10 @@ class Notepad extends JFrame {
           }
         }
       }
+    });
+    miInfo.addActionListener(e -> {
+      new InfoDialog(this, true);
+
     });
   }
 
@@ -109,10 +114,37 @@ class Notepad extends JFrame {
 
   // 나타나게 함
   private void inflate() {
-    setTitle("나의 메모장");
+    setTitle("찌우's 메모장");
     setSize(500, 300);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setLocationRelativeTo(this);
     setVisible(true);
+  }
+}
+
+class InfoDialog extends JDialog {
+  public InfoDialog(JFrame fr, boolean modal) {
+    super(fr,modal);
+    JPanel pnl = new JPanel();
+    JLabel label = new JLabel("찌우가 만들어써");
+    pnl.add(label);
+    add(pnl,"Center");
+    setTitle("정보");
+    setSize(200,100);
+    setLocationRelativeTo(this);
+    setVisible(true);
+
+
+
+
+
+
+
+
+
+
+
+
+
   }
 }
