@@ -1,6 +1,6 @@
 package p09_Thread;
 
-public class Ex07Synchronized {
+public class Ex02Synchronized {
   public static void main(String[] args) {
     Customer customer = new Customer();
     new Thread(customer).start();
