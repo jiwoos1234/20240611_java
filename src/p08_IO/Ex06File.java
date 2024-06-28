@@ -1,8 +1,7 @@
-package P08_IO;
+package p08_IO;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.SQLOutput;
 
 public class Ex06File {
   public static void main(String[] args) {

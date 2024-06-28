@@ -1,7 +1,6 @@
-package P08_IO;
+package p08_IO;
 
 import java.io.BufferedOutputStream;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
 public class Ex03FileOutputStream {

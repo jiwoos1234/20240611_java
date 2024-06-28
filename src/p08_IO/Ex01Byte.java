@@ -1,4 +1,4 @@
-package P08_IO;
+package p08_IO;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
