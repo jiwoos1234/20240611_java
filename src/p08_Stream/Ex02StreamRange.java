@@ -1,6 +1,5 @@
-package p10_Stream;
+package p08_Stream;
 
-import javax.swing.plaf.synth.SynthOptionPaneUI;
 import java.util.Random;
 import java.util.function.Consumer;
 import java.util.function.IntConsumer;

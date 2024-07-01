@@ -1,6 +1,5 @@
-package p10_Stream;
+package p08_Stream;
 
-import javax.swing.plaf.synth.SynthOptionPaneUI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
