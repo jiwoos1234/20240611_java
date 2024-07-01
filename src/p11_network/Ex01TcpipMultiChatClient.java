@@ -25,7 +25,7 @@ public class Ex01TcpipMultiChatClient extends JFrame {
 
   private void init() {
     nickname = JOptionPane.showInputDialog("Input Nickname");
-    String ip = JOptionPane.showInputDialog("Server IP", "10.100.204.26");
+    String ip = JOptionPane.showInputDialog("Server IP", "192.168.35.233");
 
     ta = new JTextArea();ta.setEditable(false);
     scp = new JScrollPane(ta);
@@ -84,8 +84,8 @@ public class Ex01TcpipMultiChatClient extends JFrame {
         try {
           String msg = in.readUTF();
           System.out.println(msg);
-          ta.
-
+          ta.append(msg);
+          tf.setText("");
         } catch (IOException e) {
           throw new RuntimeException(e);
         }
