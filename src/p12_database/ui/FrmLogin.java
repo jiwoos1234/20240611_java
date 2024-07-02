@@ -32,22 +32,19 @@ public class FrmLogin extends FrmBasic {
     btnJoin  = new JButton("Join");
     btnClose = new JButton("Close");
 
-
-    tfId.addActionListener(e -> {
-      if(!isEmptyId()) pfPass.requestFocus();
-
-    });
-
+    tfId.addActionListener(e -> {if(!isEmptyId()) pfPass.requestFocus();});
     pfPass.addActionListener(
         e -> {
-          if (!isEmptyId() && isEmptyPass()) {
+          if(!isEmptyId() && !isEmptyPass()) {
             loginAccess(tfId.getText(), new String(pfPass.getPassword()));
           }
         });
-
-
     btnLogin.addActionListener(
-        e -> loginAccess(tfId.getText(), new String(pfPass.getPassword())));
+        e -> {
+          if(!isEmptyId() && !isEmptyPass()) {
+            loginAccess(tfId.getText(), new String(pfPass.getPassword()));
+          }
+        });
     btnJoin.addActionListener(e -> {
       new FrmJoin("회원가입", 500,500);
       dispose();
@@ -61,23 +58,23 @@ public class FrmLogin extends FrmBasic {
   }
 
   private void loginAccess(String id, String pass) {
-    Members members =  new MembersDAO().loginChecks(id, pass);
-    if(members == null) {
-      JOptionPane.showMessageDialog(this,"없는 ID입니다.");
+    Members members = new MembersDAO().loginCheck(id, pass);
+    if (members==null) {
+      JOptionPane.showMessageDialog(this, "없는 ID입니다.");
     } else {
-      new FrmMain("회원정보관리"+members.getName()+"님 환영합니다.", 600, 600);
+      new FrmMain("회원정보관리 "+members.getName()+"님 환영합니다.", 600, 600);
       dispose();
     }
   }
 
   // 유효성 검사(Validation Check)
   private boolean isEmptyId() { // 비어 있지 않으면 false
-    if (tfId.getText().toString().trim().equals("")) return false;
-    return true; // 비어 있을 경우
+    if(!tfId.getText().toString().trim().equals("")) return false;
+    return true; // 비어 있으면 true
   }
   private boolean isEmptyPass() { // 비어 있지 않으면 false
-    if (!new String(pfPass.getPassword()).toString().trim().equals("")) return false;
-    return true; // 비어 있을 경우
+    if(!new String(pfPass.getPassword()).toString().trim().equals("")) return false;
+    return true; // 비어 있으면 true
   }
 
   @Override

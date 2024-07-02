@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class MembersDAO extends DAOSet {
   public Members loginCheck(String id, String pass) {
-    Members members = null;
+       Members members = null;
     try {
       conn = connectDB();
       String sql = "select * from members where id=? and pass=? ";
@@ -30,7 +30,7 @@ public class MembersDAO extends DAOSet {
     boolean result = false;
     try {
       conn = connectDB();
-      String sql = "insert into members(mno,id, pass, name, mobile) \n" + "VALUES(sq_members.nextval, ?, ?, ?, ?); ";
+      String sql = "insert into members(mno,id, pass, name, mobile)" + "VALUES(sq_members.nextval, ?, ?, ?, ?)";
       pstmt = conn.prepareStatement(sql);
       pstmt.setString(1, members.getId());
       pstmt.setString(2, members.getPass());
@@ -64,6 +64,29 @@ public class MembersDAO extends DAOSet {
       }
     } catch (SQLException e) {
       e.printStackTrace();
+    } finally {
+      closeDB();
+    }
+    return result;
+  }
+
+  public boolean updateMember(String id, String pass, String name, String mobile) {
+    boolean result = false;
+    try {
+      conn = connectDB();
+      String sql = "UPDATE members SET pass=?, name=?, mobile=? WHERE id=?";
+      pstmt = conn.prepareStatement(sql);
+      pstmt.setString(1, pass);
+      pstmt.setString(2, name);
+      pstmt.setString(3, mobile);
+      pstmt.setString(4, id);
+
+      int rowsUpdated = pstmt.executeUpdate();
+      if (rowsUpdated > 0) {
+        result = true;
+      }
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
     } finally {
       closeDB();
     }
