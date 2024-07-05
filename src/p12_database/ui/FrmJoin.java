@@ -1,166 +1,110 @@
 package p12_database.ui;
 
-import p12_database.dao.MembersDAO;
+import p12_database.controller.MainController;
 import p12_database.vo.Members;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class FrmJoin extends FrmBasic {
-  private JLabel lbLogin, lbId, lbPass, lbMobile, lbName;
-  private JTextField tfId, tfMobile, tfName;
-  private JPasswordField pfPass;
-  private JButton btnLogin, btnJoin, btnLogin1, btnClose;
   private JPanel pnlCenter, pnlSouth;
+  private JTextField tfId, tfName, tfMobile;
+  private JPasswordField pfPass;
+  private JButton btnJoin, btnLogin;
+  private JLabel[] labels;
+  private String[] strings;
 
-
-  public FrmJoin(String title, int width, int height) {
-    super(title, width, height);
+  public FrmJoin() {
+    super("회원 가입", 250, 300);
+    setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
   }
 
   @Override
   public void init() {
-    lbLogin = new JLabel("Join");
-    lbLogin.setFont(new Font("맑은 고딕", Font.BOLD | Font.CENTER_BASELINE, 30));
-    lbLogin.setHorizontalAlignment(JLabel.CENTER);
-    lbLogin.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
-    lbId = new JLabel("ID");
-    lbName = new JLabel("Name");
-    lbPass = new JLabel("Pass");
-    lbMobile = new JLabel("Mobile");
-    tfId = new JTextField(10);
-    tfName = new JTextField(10);
-    pfPass = new JPasswordField(10);
-    tfMobile = new JTextField(10);
-    btnJoin = new JButton("Join");
-    btnLogin1 = new JButton("login");
-    btnClose = new JButton("close");
-
-
-    tfId.addActionListener(e -> {
-      if (!isEmptyId()) pfPass.requestFocus();
-
-    });
-
-    pfPass.addActionListener(e -> {
-      if (!isEmptyPass()) tfName.requestFocus();
-
-    });
-
-    tfName.addActionListener(e -> {
-      if (!isEmptyName()) tfMobile.requestFocus();
-
-    });
-
-
-    tfMobile.addActionListener(e -> {
-      if (!isEmptyId() && !isEmptyPass() && !isEmptyName() && !isEmptyMobile()) {
-        joinAccess(tfId.getText(), new String(pfPass.getPassword()),
-            tfName.getText(), tfMobile.getText());
-      }
-    });
-
-    btnJoin.addActionListener(e -> {
-      if (!isEmptyId() && !isEmptyPass() && !isEmptyName() && !isEmptyMobile()) {
-        joinAccess(tfId.getText(), new String(pfPass.getPassword()),
-            tfName.getText(), tfMobile.getText());
-      }
-    });
-
-
-    btnLogin1.addActionListener(e -> {
-      new FrmLogin("로그인하기", 250,250);
-      dispose();
-    });
-
-
-    btnJoin.addActionListener(e -> {
-      String id = tfId.getText().trim();
-      String pass = new String(pfPass.getPassword()).trim();
-      String mobile = tfMobile.getText().trim();
-      String name = tfName.getText().trim();
-
-      if (id.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "ID를 채워주세요.", "입력 오류", JOptionPane.ERROR_MESSAGE);
-      } else if (pass.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "PASS를 채워주세요.", "입력 오류", JOptionPane.ERROR_MESSAGE);
-      } else if (name.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "NAME을 채워주세요.", "입력 오류", JOptionPane.ERROR_MESSAGE);
-      } else if (mobile.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "MOBILE을 채워주세요.", "입력 오류", JOptionPane.ERROR_MESSAGE);
-      } else {
-        new FrmMain("가입완료", 500, 500);
-        dispose();
-      }
-    });
-
-
-    btnClose.addActionListener(e -> {
-      dispose();
-    });
-
-
-    pnlCenter = new JPanel(new GridLayout(4, 2));
-    pnlCenter.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
+    strings = new String[] {"ID", "Password", "Name", "Mobile"};
+    labels = new JLabel[strings.length];
+    pnlCenter = new JPanel(new GridLayout(strings.length, 2));
+    pnlCenter.setBorder(BorderFactory.createEmptyBorder(0,30, 20, 30));
     pnlSouth = new JPanel();
+    for (int i = 0; i < strings.length; i++) {
+      labels[i] = new JLabel(strings[i]);
+    }
+    tfId = new JTextField(10); tfName = new JTextField(10);
+    tfMobile = new JTextField(10); pfPass = new JPasswordField(10);
+    addWindowListener(new WindowAdapter() {
+      @Override
+      public void windowClosing(WindowEvent e) {
+        int choice = JOptionPane.showConfirmDialog(null,
+            "로그인으로 이동하시겠어요?", "선택하시오",
+            JOptionPane.YES_NO_OPTION);
+        if (choice == 0) {
+          MainController.getInstance().dispatchCmd("Login",null);dispose();
+        }
+      }
+    });
+    btnJoin = new JButton("회원 가입"); btnLogin = new JButton("로그인");
+    btnJoin.addActionListener(e -> {
+      String id = tfId.getText();
+      String pw = new String(pfPass.getPassword());
+      String name = tfName.getText();
+      String mobile = tfMobile.getText();
+      if (id == null || id.equals("")) {
+        JOptionPane.showMessageDialog(FrmJoin.this, "ID를 확인하세요");
+        tfId.requestFocus();
+        return;
+      } else {
+        boolean tmp = MainController.getInstance()
+            .getMembersService().isDuplicatedId(id);
+        if(tmp){
+          JOptionPane.showMessageDialog(this, "중복된 ID입니다.");
+          tfId.setText("");tfId.requestFocus();
+          return;
+        }
+      }
+      if (pw.equals("")) {
+        JOptionPane.showMessageDialog(FrmJoin.this, "Password를 확인하세요");
+        pfPass.requestFocus();
+        return;
+      }
+      if (name.equals("")) {
+        JOptionPane.showMessageDialog(FrmJoin.this, "이름을 확인하세요");
+        tfName.requestFocus();
+        return;
+      }
+      if (mobile.equals("")) {
+        JOptionPane.showMessageDialog(FrmJoin.this, "Mobile을 확인하세요");
+        tfMobile.requestFocus();
+        return;
+      }
+      // 유효성검사를 완성하세요!!
+      boolean result = MainController.getInstance()
+          .getMembersService().insertMembers(new Members(id, pw, name, mobile));
+      if (result) {
+        JOptionPane.showMessageDialog(FrmJoin.this, "등록되었습니다.");
+        tfName.setText("");tfId.setText("");pfPass.setText("");tfMobile.setText("");
+      } else {
+        JOptionPane.showMessageDialog(FrmJoin.this, "등록 실패하였습니다.");
+      }
+
+    });
+    btnLogin.addActionListener(e -> {
+      MainController.getInstance().dispatchCmd("Login", null);dispose();
+    });
   }
 
-  private void joinAccess(String id, String pass, String name, String mobile) {
+  @Override
+  public void arrange() {
+    pnlCenter.add(labels[0]); pnlCenter.add(tfId);
+    pnlCenter.add(labels[1]); pnlCenter.add(pfPass);
+    pnlCenter.add(labels[2]); pnlCenter.add(tfName);
+    pnlCenter.add(labels[3]); pnlCenter.add(tfMobile);
+    add(pnlCenter, "Center");
 
-    MembersDAO membersDAO = new MembersDAO();
-
-    boolean success = membersDAO.insertMembers(new Members(id, pass, name, mobile));
-    if (success)
-      JOptionPane.showMessageDialog(this, "가입 완료.");
+    pnlSouth.add(btnJoin);   pnlSouth.add(btnLogin);
+    add(pnlSouth, "South");
   }
 
 
-
-private boolean isEmptyId() { // 비어 있지 않으면 false
-  if (!tfId.getText().toString().trim().equals("")) return false;
-  return true; // 비어 있을 경우
-}
-
-private boolean isEmptyPass() { // 비어 있지 않으면 false
-  if (!new String(pfPass.getPassword()).toString().trim().equals("")) return false;
-  return true; // 비어 있을 경우
-}
-
-private boolean isEmptyName() { // 비어 있지 않으면 false
-  if (!tfName.getText().toString().trim().equals("")) return false;
-  return true; // 비어 있을 경우
-}
-
-
-private boolean isEmptyMobile() { // 비어 있지 않으면 false
-  if (!tfMobile.getText().toString().trim().equals("")) return false;
-  return true; // 비어 있을 경우
-}
-
-@Override
-public void arrange() {
-  add(lbLogin, "North");
-  pnlCenter.add(lbId);
-  pnlCenter.add(tfId);
-  pnlCenter.add(lbPass);
-  pnlCenter.add(pfPass);
-  pnlCenter.add(lbName);
-  pnlCenter.add(tfName);
-  pnlCenter.add(lbMobile);
-  pnlCenter.add(tfMobile);
-
-  add(pnlCenter, "Center");
-
-  pnlSouth.add(btnJoin);
-  pnlSouth.add(btnLogin1);
-  pnlSouth.add(btnClose);
-
-  add(pnlSouth, "South");
-}
-
-
-@Override
-public void inflate() {
-  super.inflate();
-}
 }

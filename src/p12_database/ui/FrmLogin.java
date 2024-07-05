@@ -1,12 +1,10 @@
 package p12_database.ui;
 
-import p12_database.dao.MembersDAO;
+import p12_database.controller.MainController;
 import p12_database.vo.Members;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class FrmLogin extends FrmBasic {
   private JLabel lbLogin, lbId, lbPass;
@@ -15,8 +13,8 @@ public class FrmLogin extends FrmBasic {
   private JButton btnLogin, btnJoin, btnClose;
   private JPanel pnlCenter, pnlSouth;
 
-  public FrmLogin(String title, int width, int height) {
-    super(title, width, height);
+  public FrmLogin() {
+    super("Welcome Login",270, 200);
   }
 
   @Override
@@ -46,7 +44,7 @@ public class FrmLogin extends FrmBasic {
           }
         });
     btnJoin.addActionListener(e -> {
-      new FrmJoin("회원가입", 500,500);
+      MainController.getInstance().dispatchCmd("Join",null);
       dispose();
     });
     btnClose.addActionListener(e -> {
@@ -58,11 +56,13 @@ public class FrmLogin extends FrmBasic {
   }
 
   private void loginAccess(String id, String pass) {
-    Members members = new MembersDAO().loginCheck(id, pass);
+    Members members = MainController.getInstance()
+        .getMembersService().loginCheck(id, pass);
     if (members==null) {
       JOptionPane.showMessageDialog(this, "없는 ID입니다.");
     } else {
-      new FrmMain("회원정보관리 "+members.getName()+"님 환영합니다.", 600, 600);
+      MainController.getInstance().setSession(members);
+      MainController.getInstance().dispatchCmd("Main", null);
       dispose();
     }
   }
